@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -12,13 +13,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  roles: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Role",
-      default: "collectionist"
-    },
-  ],
+  role: {
+    type: ["collectionist", "admin"],
+    default: "collectionist",
+  },
 },
 {
     timestamps: true,
