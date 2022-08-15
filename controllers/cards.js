@@ -20,7 +20,7 @@ const getCards = async (req, res) => {
     }));
 
 
-    res.send({arrayCardsEdit}).status(200)
+    res.send({cards: arrayCardsEdit}).status(200)
 
   } catch (error) {
     handleError(res, "Error in obtaining cards", 403);
