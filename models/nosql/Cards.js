@@ -17,6 +17,7 @@ const CardsSchema = new mongoose.Schema(
     },
     playerRole: {
       type: String,
+      lowercase: true
     },
     teamName: {
       type: String,
