@@ -17,6 +17,11 @@ const UserSchema = new mongoose.Schema({
     type: ["collectionist", "admin"],
     default: "collectionist",
   },
+  deck: [{
+    type: mongoose.Schema.ObjectId,
+    ref: "cards",
+    default: []
+  }]
 },
 {
     timestamps: true,
