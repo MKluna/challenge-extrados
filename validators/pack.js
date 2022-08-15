@@ -63,6 +63,9 @@ const validatorPostCard = [
         if (typeof iterator !== "string") {
           throw new Error("The list must contain only string values.");
         }
+        if (iterator.length > 6 || iterator < 6) {
+          throw new Error(`ID: ${iterator} is not valid`);
+        }
       }
       return true
     }),
