@@ -16,7 +16,7 @@ const {
   validatorCreateCard,
 } = require("../validators/cards");
 
-router.get("/", getCards);
+router.get("/", authMiddleware, checkRol(["collectionist", "admin"]), getCards);
 
 router.get("/:id", validatorGetCard, getCardById);
 
