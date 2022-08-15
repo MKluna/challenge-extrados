@@ -9,15 +9,18 @@ const CardsSchema = new mongoose.Schema(
     },
     playerName: {
       type: String,
+      lowercase: true
     },
     playerLastName: {
       type: String,
+      lowercase: true
     },
     playerRole: {
       type: String,
     },
     teamName: {
       type: String,
+      lowercase: true
     },
     rarity: {
       type: String,
