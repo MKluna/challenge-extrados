@@ -27,5 +27,32 @@ const validatorCreateCard = [
   },
 ];
 
+const validateIfPlayerExist = async (model, player) => {
+  const card = await model
+    .find({
+      playerName: {
+        $regex: player.playerName.trim().replace(" ", ""),
+        $options: "i",
+      },
+    })
+    .find({
+      playerLastName: {
+        $regex: player.playerLastName.trim().replace(" ", ""),
+        $options: "i",
+      },
+    })
+    .find({
+      teamName: {
+        $regex: player.teamName.trim().replace(" ", ""),
+        $options: "i",
+      },
+    });
 
-module.exports = { validatorGetCard, validatorCreateCard };
+  if (card.length >= 1) {
+    return true;
+  }
+
+  return false;
+};
+
+module.exports = { validatorGetCard, validatorCreateCard, validateIfPlayerExist };
