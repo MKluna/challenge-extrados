@@ -1,6 +1,7 @@
 const { matchedData } = require("express-validator");
 const { cardsModel } = require("../models");
 const { handleError } = require("../utils/handleError");
+const { validateIfPlayerExist } = require("../validators/cards");
 
 const getCards = async (req, res) => {
   try {
@@ -32,8 +33,17 @@ const getCardById = async (req, res) => {
 const createCard = async (req, res) => {
   try {
     const body = matchedData(req);
+    const isExistPlayer = await validateIfPlayerExist(cardsModel, body);
+    if (isExistPlayer) {
+      return handleError(
+        res,
+        `The player ${body.playerName} ${body.playerLastName} already exists in the team ${body.teamName}`,
+        409
+      );
+    }
+
     body["idCard"] = Math.random().toString(36).slice(-6);
-    const data = await cardsModel.create(body);
+    await cardsModel.create(body);
     res.status(201);
     res.send({ msj: "Card successfully created" });
   } catch (error) {
@@ -68,10 +78,12 @@ const deleteCard = async (req, res) => {
       deleted: deleteResponse.matchedCount,
     };
 
-    res.send({ data });
+    res.send({ data }).status(200);
   } catch (e) {
     handleError(res, "Error deleting the card", 500);
   }
 };
+
+
 
 module.exports = { getCards, getCardById, createCard, updateCard, deleteCard };
