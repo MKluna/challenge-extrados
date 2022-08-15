@@ -39,13 +39,10 @@ const ifExistPack = async (model,idPackage) => {
 
 const ifExistCardInPack = async (model, idPackage, idCard) => {
   const data = await model.findOne({ idPackage });
-  const result = data.idsCards.findIndex(
-    (item) => idCard.toLowerCase() === item.toLowerCase()
-  );
-  if (result === 1) {
-    return true;
+  const {idsCards} = data;
+  if (idsCards.includes(idCard)) {
+    return true
   }
-
   return false;
 };
 
@@ -77,7 +74,7 @@ const validatorPostCard = [
 const validatorGetCardByPackNumber = [
   param("idPackage")
   .exists()
-  .isLength({ min: 10, max: 10 }).withMessage("The Number Pack must be 10 characters long.")
+  .isLength({ min: 10, max: 10 }).withMessage("The Id Pack must be 10 characters long.")
   ,
   (req, res, next) => {
     return validateResults(req, res, next);
@@ -108,7 +105,7 @@ const validatorPutCard = [
 ];
 
 const validatorDeleteCardInPack = [
-  param("idPackage").exists().isLength({ min: 10 , max: 10 }).withMessage("The Number Pack must be 10 characters long."),
+  param("idPackage").exists().isLength({ min: 10 , max: 10 }).withMessage("The Id Pack must be 10 characters long."),
   param("idCard").exists().notEmpty().isLength({ min: 6, max: 6 }),
   (req, res, next) => {
     return validateResults(req, res, next);
