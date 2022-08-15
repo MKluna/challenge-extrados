@@ -32,4 +32,32 @@ const ifCardExistInDeck = async (model,cards, _id) =>{
   return false;
 }
 
-module.exports = { validatorInsertCardInDeck, ifCardExistInDeck};
+
+const ifCardExist = async (model,cards) =>{
+
+  for (const iterator of cards) {
+    const card = await model.findOne({_id: iterator})
+    if (!card) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+const ifCardExistInMyDeck = async (model,cards) =>{
+
+  for (const iterator of cards) {
+    const card = await model.findOne({deck: {
+      "$in": [`${iterator}`]
+    }})
+
+    if (!card) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+module.exports = { validatorInsertCardInDeck, ifCardExistInDeck, ifCardExist, ifCardExistInMyDeck};
