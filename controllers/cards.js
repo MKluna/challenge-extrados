@@ -5,8 +5,23 @@ const { validateIfPlayerExist } = require("../validators/cards");
 
 const getCards = async (req, res) => {
   try {
-    const data = await cardsModel.find({});
-    res.send({ data });
+    const { user } = req;
+    const {role, deck: myDeck} = user;
+    const cards = await cardsModel.find({});
+    let arrayCardsEdit;
+
+    if (role[0] !== "collectionist") {
+      return res.send({ data: cards }).status(200);
+    }
+
+    arrayCardsEdit = cards.map((v) => ({
+      ...v._doc,
+      inMyDeck: myDeck.includes(v._id),
+    }));
+
+
+    res.send({arrayCardsEdit}).status(200)
+
   } catch (error) {
     handleError(res, "Error in obtaining cards", 403);
   }
