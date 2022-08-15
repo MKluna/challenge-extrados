@@ -14,7 +14,6 @@ const validatorRegister = [
     .exists()
     .notEmpty()
     .isEmail(),
-    check("role"),
     (req, res, next) => {
         return validateResults(req, res, next)
     }
