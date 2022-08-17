@@ -60,9 +60,9 @@ const createPack = async (req, res) => {
       );
     insertPack["dateOfPacking"] = date;
     insertPack["idPackage"] = Math.random().toString(36).slice(-10);
-    const package = await packModel.create(insertPack);
+    const pack = await packModel.create(insertPack);
     res.status(201);
-    res.send({ msj: "Pack successfully created", package });
+    res.send({ msj: "Pack successfully created", package: pack });
   } catch (error) {
     console.log(error);
     handleError(res, "Error when creating the pack", 500);
