@@ -79,7 +79,3 @@ describe("Test of /api/auth", () => {
     expect(msjError[0].param).toEqual("password");
   });
 });
-
-afterAll(async () => {
-  await mongoose.connection.close();
-});
