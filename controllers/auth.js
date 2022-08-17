@@ -46,7 +46,7 @@ const loginController = async (req, res) => {
       token: await tokenSigning(user)
     };
 
-    res.send({ data });
+    res.send({ data }).status(200);
   } catch (e) {
     handleError(res, "ERROR_LOGIN_USER");
   }
